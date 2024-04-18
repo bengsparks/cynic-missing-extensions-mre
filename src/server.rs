@@ -19,7 +19,7 @@ async fn graphql() -> impl axum::response::IntoResponse {
                     "helloWorld"
                 ],
                 "extensions": {
-                    "code": 500
+                    "code": 401
                 }
             }
         ],

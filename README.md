@@ -1,10 +1,29 @@
-# Replacing `run_graphql` with `run_graphql_with_ext` in order to extract extensions 
+## Replacing `run_graphql` with `run_graphql_with_ext` in order to extract extensions 
 
-## Start "GraphQL" server at http://127.0.0.1:1111
+### Start "GraphQL" server at http://127.0.0.1:1111
 
 `cargo run --bin server`
 
-## Use provided `ReqwestExt::run_graphql` trait to query the server
+This server will always respond to `GET /graphql` with
+```json
+{
+    "errors": [
+        {
+            "message": "Unauthorized",
+            "locations": null,
+            "path": [
+                "helloWorld"
+            ],
+            "extensions": {
+                "code": 401
+            }
+        }
+    ],
+    "data": null
+}
+```
+
+### Use provided `ReqwestExt::run_graphql` trait to query the server
 
 `cargo run --bin broken-client`
 
@@ -34,7 +53,7 @@
 )
 ```
 
-## Use manual deserialisation in implementation based on `TweakedReqwestExt::run_graphql_with_ext`
+### Use manual deserialisation in implementation based on `TweakedReqwestExt::run_graphql_with_ext`
 
 `cargo run --bin working-client`
 
@@ -57,7 +76,7 @@
                     ),
                     extensions: Some(
                         Extension {
-                            code: 500,
+                            code: 401,
                         },
                     ),
                 },
